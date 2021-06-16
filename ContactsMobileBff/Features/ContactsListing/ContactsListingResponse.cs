@@ -42,19 +42,11 @@ namespace ContactsMobileBFF.Features.ContactsListing
 
     public class SortByOption
     {
-        public SortByType SortType { get; set; }
+        public ContactsListingSortByType SortType { get; set; }
         public string DisplayText { get; set; }
         public bool IsCurrentlySelected { get; set; }
         public string SelectActionUrl { get; set; }
         public AnalyticsEventData SelectActionEventData { get; set; }
-    }
-
-    public enum SortByType
-    {
-        Name,
-        Email,
-        AccountNumber,
-        DateCreated
     }
 
     public class SortOrderComponent

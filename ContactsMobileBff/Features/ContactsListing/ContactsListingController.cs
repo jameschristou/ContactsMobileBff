@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ContactsMobileBff.Features.ContactsListing;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace ContactsMobileBFF.Features.ContactsListing
                         new SortByOption
                         {
                             DisplayText = "Name",
-                            SortType = SortByType.Name,
+                            SortType = ContactsListingSortByType.Name,
                             IsCurrentlySelected = true,
                             SelectActionUrl = "/contacts/?sortBy=name",
                             SelectActionEventData = new AnalyticsEventData { EventName = "contactsListing.sortByName" }
@@ -42,7 +43,7 @@ namespace ContactsMobileBFF.Features.ContactsListing
                         new SortByOption
                         {
                             DisplayText = "Email",
-                            SortType = SortByType.Email,
+                            SortType = ContactsListingSortByType.Email,
                             IsCurrentlySelected = false,
                             SelectActionUrl = "/contacts/?sortBy=email",
                             SelectActionEventData = new AnalyticsEventData { EventName = "contactsListing.sortByEmail" }
@@ -50,7 +51,7 @@ namespace ContactsMobileBFF.Features.ContactsListing
                         new SortByOption
                         {
                             DisplayText = "Account number",
-                            SortType = SortByType.AccountNumber,
+                            SortType = ContactsListingSortByType.AccountNumber,
                             IsCurrentlySelected = false,
                             SelectActionUrl = "/contacts/?sortBy=accountNumber",
                             SelectActionEventData = new AnalyticsEventData { EventName = "contactsListing.sortByAccountNumber" }
@@ -58,7 +59,7 @@ namespace ContactsMobileBFF.Features.ContactsListing
                         new SortByOption
                         {
                             DisplayText = "DateCreated",
-                            SortType = SortByType.DateCreated,
+                            SortType = ContactsListingSortByType.DateCreated,
                             IsCurrentlySelected = false,
                             SelectActionUrl = "/contacts/?sortBy=dateCreated",
                             SelectActionEventData = new AnalyticsEventData { EventName = "contactsListing.sortByDateCreated" }
