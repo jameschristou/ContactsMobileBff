@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ContactsMobileBFF.Features.ContactsListing
 {
@@ -11,15 +12,19 @@ namespace ContactsMobileBFF.Features.ContactsListing
     public class ContactsController : ControllerBase
     {
         private readonly ILogger<ContactsController> _logger;
+        private readonly IContactsServiceClient _contactsService;
 
-        public ContactsController(ILogger<ContactsController> logger)
+        public ContactsController(ILogger<ContactsController> logger, IContactsServiceClient contactsService)
         {
             _logger = logger;
+            _contactsService = contactsService;
         }
 
         [HttpGet]
         public ContactsListingResponse Get()
         {
+            var contacts = _contactsService.GetContacts("", "");
+
             return new ContactsListingResponse
             {
                 ScreenTitleText = "Contacts",
@@ -73,65 +78,12 @@ namespace ContactsMobileBFF.Features.ContactsListing
                     SelectActionUrl = "/contacts/?sortOrder=desc",
                     SelectActionEventData = new AnalyticsEventData { EventName = "contactsListing.sortOrder" }
                 },
-                Contacts = new List<ContactListingComponent>
-                {
-                    new ContactListingComponent
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Christou Chrisco Hampers",
-                        PrimaryContactName = "Jimmy Chris",
-                        Avatar = new ContactAvatar { Text = "CCH", Colour = "" } 
-                    },
-                    new ContactListingComponent
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Garipoli Garibaldis",
-                        PrimaryContactName = "Adrian Gari",
-                        Avatar = new ContactAvatar { Text = "GG", Colour = "" }
-                    },
-                    new ContactListingComponent
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Inta Intelligence Agency",
-                        PrimaryContactName = "Phai Inta",
-                        Avatar = new ContactAvatar { Text = "IIA", Colour = "" }
-                    },
-                    new ContactListingComponent
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Kaur Kayaks",
-                        PrimaryContactName = "Sup Kur",
-                        Avatar = new ContactAvatar { Text = "KK", Colour = "" }
-                    },
-                    new ContactListingComponent
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Meyer Meditation",
-                        PrimaryContactName = "Mike Meyers",
-                        Avatar = new ContactAvatar { Text = "MM", Colour = "" }
-                    },
-                    new ContactListingComponent
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Pham Pharmacy",
-                        PrimaryContactName = "Thu Phantastic",
-                        Avatar = new ContactAvatar { Text = "PP", Colour = "" }
-                    },
-                    new ContactListingComponent
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Pram Practitioners",
-                        PrimaryContactName = "Josie Pram",
-                        Avatar = new ContactAvatar { Text = "PP", Colour = "" }
-                    },
-                    new ContactListingComponent
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Price-Bell Peanut Butter",
-                        PrimaryContactName = "Georgie Tell",
-                        Avatar = new ContactAvatar { Text = "PBPB", Colour = "" }
-                    }
-                }
+                Contacts = contacts.Select(c => new ContactListingComponent {
+                    Id = c.Id,
+                    Name = c.Name,
+                    PrimaryContactName = c.PrimaryContactName,
+                    Avatar = new ContactAvatar { Text = "CCH", Colour = "" }
+                }).ToList()
             };
         }
     }

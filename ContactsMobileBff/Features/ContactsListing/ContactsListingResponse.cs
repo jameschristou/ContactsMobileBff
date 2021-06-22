@@ -16,7 +16,6 @@ namespace ContactsMobileBFF.Features.ContactsListing
     public class ContactListingComponent
     {
         public Guid Id { get; set; }
-        
         public string Name { get; set; }
         public string PrimaryContactName { get; set; }
         public ContactAvatar Avatar { get; set; }

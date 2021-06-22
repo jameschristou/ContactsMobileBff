@@ -1,3 +1,4 @@
+using ContactsMobileBff.Features.ContactsListing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,14 @@ namespace ContactsMobileBFF
                         o.JsonSerializerOptions.IgnoreNullValues = true;
                         o.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
                     });
+
+            services.AddCors(options =>
+                    {
+                        options.AddPolicy(name: "MyPolicy",
+                            builder => builder.AllowAnyOrigin());
+                    });
+
+            services.AddSingleton<IContactsServiceClient, ContactsServiceClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +47,8 @@ namespace ContactsMobileBFF
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("MyPolicy");
 
             app.UseAuthorization();
 
