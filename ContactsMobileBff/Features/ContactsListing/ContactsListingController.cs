@@ -21,9 +21,30 @@ namespace ContactsMobileBFF.Features.ContactsListing
         }
 
         [HttpGet]
-        public ContactsListingResponse Get()
+        public ContactsListingResponse Get([FromQuery]ContactsListingRequest request)
         {
+            // set default values for the request if required (this could be moved to a custom model binder instead)
+            if (!request.SortBy.HasValue)
+            {
+                request.SortBy = ContactsListingSortByType.Name;
+            }
+
+            if (!request.SortOrder.HasValue)
+            {
+                request.SortOrder = ContactsListingSortOrderType.Asc;
+            }
+
             var contacts = _contactsService.GetContacts("", "");
+
+            // build up the list of sort options
+            var sortOptions = ((ContactsListingSortByType[])Enum.GetValues(typeof(ContactsListingSortByType))).Select(t => new SortByOption
+                {
+                    DisplayText = t.ToString(),
+                    SortType = t,
+                    IsCurrentlySelected = request.SortBy.Value == t,
+                    SelectActionUrl = $"/contacts/?sortBy={t.ToString().ToLower()}",
+                    SelectActionEventData = new AnalyticsEventData { EventName = $"contactsListing.sortBy{t.ToString()}" }
+                }).ToList();
 
             return new ContactsListingResponse
             {
@@ -35,46 +56,12 @@ namespace ContactsMobileBFF.Features.ContactsListing
                 SortByComponent = new SortByComponent
                 {
                     DisplayText = "Sort",
-                    SortByOptions = new List<SortByOption>
-                    {
-                        new SortByOption
-                        {
-                            DisplayText = "Name",
-                            SortType = ContactsListingSortByType.Name,
-                            IsCurrentlySelected = true,
-                            SelectActionUrl = "/contacts/?sortBy=name",
-                            SelectActionEventData = new AnalyticsEventData { EventName = "contactsListing.sortByName" }
-                        },
-                        new SortByOption
-                        {
-                            DisplayText = "Email",
-                            SortType = ContactsListingSortByType.Email,
-                            IsCurrentlySelected = false,
-                            SelectActionUrl = "/contacts/?sortBy=email",
-                            SelectActionEventData = new AnalyticsEventData { EventName = "contactsListing.sortByEmail" }
-                        },
-                        new SortByOption
-                        {
-                            DisplayText = "Account number",
-                            SortType = ContactsListingSortByType.AccountNumber,
-                            IsCurrentlySelected = false,
-                            SelectActionUrl = "/contacts/?sortBy=accountNumber",
-                            SelectActionEventData = new AnalyticsEventData { EventName = "contactsListing.sortByAccountNumber" }
-                        },
-                        new SortByOption
-                        {
-                            DisplayText = "DateCreated",
-                            SortType = ContactsListingSortByType.DateCreated,
-                            IsCurrentlySelected = false,
-                            SelectActionUrl = "/contacts/?sortBy=dateCreated",
-                            SelectActionEventData = new AnalyticsEventData { EventName = "contactsListing.sortByDateCreated" }
-                        }
-                    },
+                    SortByOptions = sortOptions,
                     ActionEventData = new AnalyticsEventData { EventName = "contactsListing.sortBy" }
                 },
                 SortOrderComponent = new SortOrderComponent
                 {
-                    DisplayText = "A-Z",
+                    DisplayText = "A-Z", // get this from a lookup based on the sortby type
                     SelectActionUrl = "/contacts/?sortOrder=desc",
                     SelectActionEventData = new AnalyticsEventData { EventName = "contactsListing.sortOrder" }
                 },
