@@ -10,18 +10,18 @@ namespace ContactsMobileBFF.Features.ContactsListing
         public SortByComponent SortByComponent { get; set; }
         public SortOrderComponent SortOrderComponent { get; set; }
 
-        public List<ContactListingComponent> Contacts { get; set; }
+        public List<ContactListItemComponent> Contacts { get; set; }
     }
 
-    public class ContactListingComponent
+    public class ContactListItemComponent
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string PrimaryContactName { get; set; }
-        public ContactAvatar Avatar { get; set; }
+        public string PrimaryDisplayText { get; set; }
+        public string SecondaryDisplayText { get; set; }
+        public ContactAvatarComponent Avatar { get; set; }
     }
 
-    public class ContactAvatar
+    public class ContactAvatarComponent
     {
         public string Text { get; set; }
         public string Colour { get; set; }

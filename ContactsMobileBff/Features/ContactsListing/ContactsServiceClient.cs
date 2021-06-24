@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ContactsMobileBff.Infrastructure.AttributeBasedBindings;
+using System;
 using System.Collections.Generic;
 
 namespace ContactsMobileBff.Features.ContactsListing
@@ -8,6 +9,7 @@ namespace ContactsMobileBff.Features.ContactsListing
         List<ContactDto> GetContacts(string sortBy, string sortOrder);
     }
 
+    [Bind]
     public class ContactsServiceClient : IContactsServiceClient
     {
         private List<ContactDto> contacts = new List<ContactDto>

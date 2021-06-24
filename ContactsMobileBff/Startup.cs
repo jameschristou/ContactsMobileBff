@@ -1,9 +1,10 @@
-using ContactsMobileBff.Features.ContactsListing;
+using ContactsMobileBff.Infrastructure.AttributeBasedBindings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace ContactsMobileBFF
 {
@@ -19,6 +20,8 @@ namespace ContactsMobileBFF
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            services.UseAttributeBasedBindings(assemblies);
 
             services.AddControllers()
                     .AddJsonOptions(o =>
@@ -32,8 +35,6 @@ namespace ContactsMobileBFF
                         options.AddPolicy(name: "MyPolicy",
                             builder => builder.AllowAnyOrigin());
                     });
-
-            services.AddSingleton<IContactsServiceClient, ContactsServiceClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
