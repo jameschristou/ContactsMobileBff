@@ -37,6 +37,4 @@ namespace ContactsMobileBFF.Features.ContactsListing
             };
         }
     }
-
-    
 }

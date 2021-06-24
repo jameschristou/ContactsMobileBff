@@ -24,7 +24,8 @@ namespace ContactsMobileBFF.Features.ContactsListing
     public class ContactAvatarComponent
     {
         public string Text { get; set; }
-        public string Colour { get; set; }
+        public string BackgroundColour { get; set; }
+        public string TextColour { get; set; }
     }
 
     public class SearchComponent
