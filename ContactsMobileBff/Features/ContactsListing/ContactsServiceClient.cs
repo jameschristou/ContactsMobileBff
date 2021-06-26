@@ -20,55 +20,78 @@ namespace ContactsMobileBff.Features.ContactsListing
             {
                 Id = Guid.NewGuid(),
                 Name = "Christou Chrisco Hampers",
-                PrimaryContactName = "Jimmy Chris"
+                PrimaryContactName = "Jimmy Chris",
+                Email = "jimmy.chris@gmail.com",
+                AccountNumber = "3456365656",
+                DateCreated = new DateTime(2019,09,01)
             },
             new ContactDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Garipoli Garibaldis",
-                PrimaryContactName = "Adrian Gari"
+                PrimaryContactName = "Adrian Gari",
+                DateCreated = new DateTime(2019,09,10)
             },
             new ContactDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Inta Intelligence Agency",
-                PrimaryContactName = "Phai Inta"
+                PrimaryContactName = "Phai Inta",
+                DateCreated = new DateTime(2020,09,01)
             },
             new ContactDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Kaur Kayaks",
-                PrimaryContactName = "Sup Kur"
+                PrimaryContactName = "Sup Kur",
+                DateCreated = new DateTime(2012,01,01)
             },
             new ContactDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Meyer Meditation",
-                PrimaryContactName = "Mike Meyers"
+                PrimaryContactName = "Mike Meyers",
+                DateCreated = new DateTime(2010,08,01)
             },
             new ContactDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Pham Pharmacy",
-                PrimaryContactName = "Thu Phantastic"
+                PrimaryContactName = "Thu Phantastic",
+                DateCreated = new DateTime(2015,09,01)
             },
             new ContactDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Pram Practitioners",
-                PrimaryContactName = "Josie Pram"
+                PrimaryContactName = "Josie Pram",
+                AccountNumber = "43554654646",
+                DateCreated = new DateTime(2021,01,01)
             },
             new ContactDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Price-Bell Peanut Butter",
-                PrimaryContactName = "Georgie Tell"
+                PrimaryContactName = "Georgie Tell",
+                Email = "georgie.pb@test.com",
+                DateCreated = new DateTime(2020,04,01)
             }
         };
 
         public List<ContactDto> GetContacts(ContactsListingSortByType sortBy, ContactsListingSortOrderType sortOrder)
         {
-            return sortOrder == ContactsListingSortOrderType.Asc ? contacts.OrderBy(c => GetSortByValue(sortBy, c)).ToList() : contacts.OrderByDescending(c => GetSortByValue(sortBy, c)).ToList();
+            if(sortBy == ContactsListingSortByType.DateCreated)
+            {
+                return sortOrder == ContactsListingSortOrderType.Asc ? contacts.OrderBy(c => c.DateCreated).ToList() : contacts.OrderByDescending(c => c.DateCreated).ToList();
+            }
+
+            var stringComparer = new StringComparer();
+
+            IOrderedEnumerable<ContactDto> sortedList = contacts.OrderBy(c => string.IsNullOrEmpty(GetSortByValue(sortBy, c)));
+
+            return sortOrder == ContactsListingSortOrderType.Asc ?
+                                sortedList.ThenBy(c => GetSortByValue(sortBy, c)).ToList() :
+                                sortedList.ThenByDescending(c => GetSortByValue(sortBy, c)).ToList();
         }
 
         private string GetSortByValue(ContactsListingSortByType sortBy, ContactDto c)

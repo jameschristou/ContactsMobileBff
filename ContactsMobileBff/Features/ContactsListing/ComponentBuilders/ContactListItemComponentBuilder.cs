@@ -5,7 +5,7 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
 {
     public interface IContactListItemComponentBuilder
     {
-        ContactListItemComponent Build(ContactDto contact);
+        ContactListItemComponent Build(ContactDto contact, ContactsListingSortByType sortByType);
     }
 
     [Bind]
@@ -18,15 +18,28 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
             _contactAvatarComponentBuilder = contactAvatarComponentBuilder;
         }
 
-        public ContactListItemComponent Build(ContactDto contact)
+        public ContactListItemComponent Build(ContactDto contact, ContactsListingSortByType sortByType)
         {
             return new ContactListItemComponent
             {
                 Id = contact.Id,
                 PrimaryDisplayText = contact.Name,
-                SecondaryDisplayText = contact.PrimaryContactName,
+                SecondaryDisplayText = GetSecondaryDisplayText(contact, sortByType),
                 Avatar = _contactAvatarComponentBuilder.Build(contact)
             };
+        }
+
+        private string GetSecondaryDisplayText(ContactDto contact, ContactsListingSortByType sortByType)
+        {
+            switch (sortByType)
+            {
+                case ContactsListingSortByType.Name: return contact.PrimaryContactName;
+                case ContactsListingSortByType.Email: return contact.Email;
+                case ContactsListingSortByType.DateCreated: return contact.DateCreated.ToString();
+                case ContactsListingSortByType.AccountNumber: return contact.AccountNumber;
+            }
+
+            return contact.PrimaryContactName;
         }
     }
 }
