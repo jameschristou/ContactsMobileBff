@@ -24,7 +24,7 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
 
         public List<ContactListItemComponent> Build(ContactsListingRequest request)
         {
-            var contacts = _contactsService.GetContacts("", "");
+            var contacts = _contactsService.GetContacts(request.SortBy, request.SortOrder);
 
             return contacts.Select(_contactListItemComponentBuilder.Build).ToList();
         }
