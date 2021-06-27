@@ -85,8 +85,6 @@ namespace ContactsMobileBff.Features.ContactsListing
                 return sortOrder == ContactsListingSortOrderType.Asc ? contacts.OrderBy(c => c.DateCreated).ToList() : contacts.OrderByDescending(c => c.DateCreated).ToList();
             }
 
-            var stringComparer = new StringComparer();
-
             IOrderedEnumerable<ContactDto> sortedList = contacts.OrderBy(c => string.IsNullOrEmpty(GetSortByValue(sortBy, c)));
 
             return sortOrder == ContactsListingSortOrderType.Asc ?

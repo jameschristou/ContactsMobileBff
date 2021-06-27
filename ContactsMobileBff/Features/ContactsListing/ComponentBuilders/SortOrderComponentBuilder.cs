@@ -51,7 +51,7 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
             return new SortOrderComponent
             {
                 DisplayText = GetDisplayText(request),
-                SelectActionUrl = $"/contacts/?sortOrder={invertedSortOrder.ToString().ToLower()}",
+                SelectActionUrl = $"/contacts/?sortBy={request.SortBy.ToString().ToLower()}&sortOrder={invertedSortOrder.ToString().ToLower()}",
                 SelectActionEventData = new AnalyticsEventData { EventName = $"contactsListing.sortOrder{invertedSortOrder}" }
             };
         }
