@@ -31,8 +31,8 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
             {
                 ContactsListingSortByType.DateCreated, new Dictionary<ContactsListingSortOrderType, string>
                 {
-                    { ContactsListingSortOrderType.Asc, "New-Old"},
-                    { ContactsListingSortOrderType.Desc, "Old-New"}
+                    { ContactsListingSortOrderType.Desc, "New-Old"},
+                    { ContactsListingSortOrderType.Asc, "Old-New"}
                 }
             },
             {

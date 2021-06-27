@@ -35,7 +35,7 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
             {
                 case ContactsListingSortByType.Name: return contact.PrimaryContactName;
                 case ContactsListingSortByType.Email: return contact.Email;
-                case ContactsListingSortByType.DateCreated: return contact.DateCreated.ToString();
+                case ContactsListingSortByType.DateCreated: return contact.DateCreated.ToString("dd MMMM yyyy");
                 case ContactsListingSortByType.AccountNumber: return contact.AccountNumber;
             }
 
