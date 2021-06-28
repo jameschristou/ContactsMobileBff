@@ -10,7 +10,12 @@ namespace ContactsMobileBFF.Features.ContactsListing
         public SortByComponent SortByComponent { get; set; }
         public SortOrderComponent SortOrderComponent { get; set; }
 
-        public List<ContactListItemComponent> Contacts { get; set; }
+        public ContactsListComponent ContactsListComponent { get; set; }
+    }
+
+    public class ContactsListComponent
+    {
+        public List<ContactListItemComponent> ContactsListItems { get; set; }
     }
 
     public class ContactListItemComponent

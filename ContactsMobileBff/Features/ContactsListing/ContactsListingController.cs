@@ -36,7 +36,7 @@ namespace ContactsMobileBFF.Features.ContactsListing
                 },
                 SortByComponent = _sortByComponentBuilder.Build(request),
                 SortOrderComponent = _sortOrderComponentBuilder.Build(request),
-                Contacts = _contactsListComponentBuilder.Build(request)
+                ContactsListComponent = _contactsListComponentBuilder.Build(request)
             };
         }
     }

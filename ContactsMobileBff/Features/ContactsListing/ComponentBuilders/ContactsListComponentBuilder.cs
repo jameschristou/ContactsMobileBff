@@ -1,13 +1,12 @@
 ﻿using ContactsMobileBff.Infrastructure.AttributeBasedBindings;
 using ContactsMobileBFF.Features.ContactsListing;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
 {
     public interface IContactsListComponentBuilder
     {
-        List<ContactListItemComponent> Build(ContactsListingRequest request);
+        ContactsListComponent Build(ContactsListingRequest request);
     }
 
     [Bind]
@@ -22,11 +21,14 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
             _contactListItemComponentBuilder = contactListItemComponentBuilder;
         }
 
-        public List<ContactListItemComponent> Build(ContactsListingRequest request)
+        public ContactsListComponent Build(ContactsListingRequest request)
         {
             var contacts = _contactsService.GetContacts(request.SortBy, request.SortOrder);
 
-            return contacts.Select(c => _contactListItemComponentBuilder.Build(c, request.SortBy)).ToList();
+            return new ContactsListComponent
+            {
+                ContactsListItems = contacts.Select(c => _contactListItemComponentBuilder.Build(c, request.SortBy)).ToList()
+            };
         }
     }
 }
