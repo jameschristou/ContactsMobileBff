@@ -14,7 +14,7 @@ namespace ContactsMobileBff.Features.ContactsListing
     [Bind]
     public class ContactsServiceClient : IContactsServiceClient
     {
-        private List<ContactDto> contacts = new List<ContactDto>
+        private readonly List<ContactDto> _contacts = new List<ContactDto>
         {
             new ContactDto
             {
@@ -82,10 +82,10 @@ namespace ContactsMobileBff.Features.ContactsListing
         {
             if(sortBy == ContactsListingSortByType.DateCreated)
             {
-                return sortOrder == ContactsListingSortOrderType.Asc ? contacts.OrderBy(c => c.DateCreated).ToList() : contacts.OrderByDescending(c => c.DateCreated).ToList();
+                return sortOrder == ContactsListingSortOrderType.Asc ? _contacts.OrderBy(c => c.DateCreated).ToList() : _contacts.OrderByDescending(c => c.DateCreated).ToList();
             }
 
-            IOrderedEnumerable<ContactDto> sortedList = contacts.OrderBy(c => string.IsNullOrEmpty(GetSortByValue(sortBy, c)));
+            var sortedList = _contacts.OrderBy(c => string.IsNullOrEmpty(GetSortByValue(sortBy, c)));
 
             return sortOrder == ContactsListingSortOrderType.Asc ?
                                 sortedList.ThenBy(c => GetSortByValue(sortBy, c)).ToList() :

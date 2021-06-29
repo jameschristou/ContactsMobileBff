@@ -24,7 +24,7 @@ namespace ContactsMobileBFF.Features.ContactsListing
         [HttpGet]
         public ContactsListingResponse Get([FromQuery]ContactsListingRequest request)
         {
-            // TODO: create a custom model binder for ContactsListingRequest to handle things like deprecated or invalid senums
+            // TODO: create a custom model binder for ContactsListingRequest to handle things like deprecated or invalid enums
             // sent by client, ensuring NumResults is within bounds
 
             return new ContactsListingResponse
