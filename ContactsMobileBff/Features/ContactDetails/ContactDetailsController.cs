@@ -1,6 +1,4 @@
-﻿using ContactsMobileBff.Features.ContactsListing;
-using ContactsMobileBff.Features.ContactsListing.ComponentBuilders;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 

@@ -1,10 +1,12 @@
 using ContactsMobileBff.Infrastructure.AttributeBasedBindings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Collections.Generic;
 
 namespace ContactsMobileBFF
 {
@@ -21,6 +23,18 @@ namespace ContactsMobileBFF
         public void ConfigureServices(IServiceCollection services)
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            services.AddLocalization(x => x.ResourcesPath = "");
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture("en");
+                options.RequestCultureProviders = new List<IRequestCultureProvider>
+                {
+                    new QueryStringRequestCultureProvider()
+                };
+            });
+
             services.UseAttributeBasedBindings(assemblies);
 
             services.AddControllers()
