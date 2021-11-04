@@ -32,7 +32,7 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
             // build up the list of sort options
             var sortOptions = ((ContactsListingSortByType[])Enum.GetValues(typeof(ContactsListingSortByType))).Select(t => new SortByOption
             {
-                DisplayText = $"{_resourceFileIndexSortBy}{t}",
+                DisplayText = _localizer[$"{_resourceFileIndexSortBy}{t}"],
                 SortType = t,
                 IsCurrentlySelected = request.SortBy == t,
                 SelectActionUrl = $"/contacts/?sortBy={t.ToString().ToLower()}",

@@ -59,6 +59,8 @@ namespace ContactsMobileBFF
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseRequestLocalization();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
