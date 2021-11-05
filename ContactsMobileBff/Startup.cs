@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace ContactsMobileBFF
 {
@@ -28,11 +29,19 @@ namespace ContactsMobileBFF
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("es")
+                };
+
                 options.DefaultRequestCulture = new RequestCulture("en");
                 options.RequestCultureProviders = new List<IRequestCultureProvider>
                 {
                     new QueryStringRequestCultureProvider()
                 };
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
             });
 
             services.UseAttributeBasedBindings(assemblies);
