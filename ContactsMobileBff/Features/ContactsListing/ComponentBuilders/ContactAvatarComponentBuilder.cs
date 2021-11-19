@@ -8,7 +8,7 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
 {
     public interface IContactAvatarComponentBuilder
     {
-        ContactAvatarComponent Build(ContactDto contact);
+        ContactAvatarComponent Build(ContactListingItemDto contact);
     }
 
     [Bind]
@@ -28,7 +28,7 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
             new AvatarColourPair{ BackgroundColour = "FFB2CB", TextColour = "592335" }
         };
 
-        public ContactAvatarComponent Build(ContactDto contact)
+        public ContactAvatarComponent Build(ContactListingItemDto contact)
         {
             var avatarColourPair = GetAvatarColourPair(contact.Name);
 

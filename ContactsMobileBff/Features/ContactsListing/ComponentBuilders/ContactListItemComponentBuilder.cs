@@ -5,7 +5,7 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
 {
     public interface IContactListItemComponentBuilder
     {
-        ContactListItemComponent Build(ContactDto contact, ContactsListingSortByType sortByType);
+        ContactListItemComponent Build(ContactListingItemDto contact, ContactsListingSortByType sortByType);
     }
 
     [Bind]
@@ -18,7 +18,7 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
             _contactAvatarComponentBuilder = contactAvatarComponentBuilder;
         }
 
-        public ContactListItemComponent Build(ContactDto contact, ContactsListingSortByType sortByType)
+        public ContactListItemComponent Build(ContactListingItemDto contact, ContactsListingSortByType sortByType)
         {
             return new ContactListItemComponent
             {
@@ -29,7 +29,7 @@ namespace ContactsMobileBff.Features.ContactsListing.ComponentBuilders
             };
         }
 
-        private string GetSecondaryDisplayText(ContactDto contact, ContactsListingSortByType sortByType)
+        private string GetSecondaryDisplayText(ContactListingItemDto contact, ContactsListingSortByType sortByType)
         {
             switch (sortByType)
             {

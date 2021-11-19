@@ -15,3 +15,7 @@ To build this application just run `dotnet build ContactsMobileBFF.csproj` at th
 
 ### Run
 To run this application just run `dotnet run ContactsMobileBFF.csproj` at the command line.
+
+## TODO
+* Create unit tests which verify that every resource file contains an entry for every resource string we require
+* Come up with a custom request culture provider that uses the users settings rather than relying on the query parameter

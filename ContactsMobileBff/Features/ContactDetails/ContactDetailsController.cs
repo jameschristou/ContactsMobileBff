@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ContactsMobileBff.Features.ContactDetails;
+using ContactsMobileBff.Features.ContactDetails.ComponentBuilders;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
@@ -8,41 +10,28 @@ namespace ContactsMobileBFF.Features.ContactsListing
     [Route("contacts/{contactId}")]
     public class ContactDetailsController : ControllerBase
     {
+        private readonly IContactDetailsServiceClient _contactDetailsServiceClient;
+        private readonly IPrimaryPersonComponentBuilder _primaryPersonComponentBuilder;
+
+        public ContactDetailsController(IContactDetailsServiceClient contactDetailsServiceClient, IPrimaryPersonComponentBuilder primaryPersonComponentBuilder)
+        {
+            _contactDetailsServiceClient = contactDetailsServiceClient;
+            _primaryPersonComponentBuilder = primaryPersonComponentBuilder;
+        }
+
         [HttpGet]
         public ContactDetailsResponse Get([FromRoute] Guid contactId)
         {
             // TODO: create a custom model binder for ContactsListingRequest to handle things like deprecated or invalid enums
             // sent by client, ensuring NumResults is within bounds
+            var contactDetails = _contactDetailsServiceClient.GetContactDetails(contactId);
 
             return new ContactDetailsResponse
             {
-                Id = contactId,
-                Name = "Test",
-                People = new List<Person>
-                {
-                    new Person { FirstName = "Jimmy", LastName = "Jango", PersonType = PersonType.Primary }
-                }
+                ScreenTitleText = "Contact Edit",
+                SaveButtonText = "Save",
+                PrimaryPersonComponent = _primaryPersonComponentBuilder.Build(contactDetails)
             };
         }
-    }
-
-    public class ContactDetailsResponse
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public List<Person> People { get; set; }
-    }
-
-    public class Person
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public PersonType PersonType { get; set; }
-    }
-
-    public enum PersonType
-    {
-        Primary,
-        Other
     }
 }

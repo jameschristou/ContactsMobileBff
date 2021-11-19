@@ -8,15 +8,15 @@ namespace ContactsMobileBff.Features.ContactsListing
 {
     public interface IContactsServiceClient
     {
-        List<ContactDto> GetContacts(ContactsListingSortByType sortBy, ContactsListingSortOrderType sortOrder);
+        List<ContactListingItemDto> GetContacts(ContactsListingSortByType sortBy, ContactsListingSortOrderType sortOrder);
     }
 
     [Bind]
-    public class ContactsServiceClient : IContactsServiceClient
+    public class ContactListingServiceClient : IContactsServiceClient
     {
-        private readonly List<ContactDto> _contacts = new List<ContactDto>
+        private readonly List<ContactListingItemDto> _contacts = new List<ContactListingItemDto>
         {
-            new ContactDto
+            new ContactListingItemDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Christou Chrisco Hampers",
@@ -25,42 +25,42 @@ namespace ContactsMobileBff.Features.ContactsListing
                 AccountNumber = "3456365656",
                 DateCreated = new DateTime(2019,09,01)
             },
-            new ContactDto
+            new ContactListingItemDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Garipoli Garibaldis",
                 PrimaryContactName = "Adrian Gari",
                 DateCreated = new DateTime(2019,09,10)
             },
-            new ContactDto
+            new ContactListingItemDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Inta Intelligence Agency",
                 PrimaryContactName = "Phai Inta",
                 DateCreated = new DateTime(2020,09,01)
             },
-            new ContactDto
+            new ContactListingItemDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Kaur Kayaks",
                 PrimaryContactName = "Sup Kur",
                 DateCreated = new DateTime(2012,01,01)
             },
-            new ContactDto
+            new ContactListingItemDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Meyer Meditation",
                 PrimaryContactName = "Mike Meyers",
                 DateCreated = new DateTime(2010,08,01)
             },
-            new ContactDto
+            new ContactListingItemDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Pham Pharmacy",
                 PrimaryContactName = "Thu Phantastic",
                 DateCreated = new DateTime(2015,09,01)
             },
-            new ContactDto
+            new ContactListingItemDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Pram Practitioners",
@@ -68,7 +68,7 @@ namespace ContactsMobileBff.Features.ContactsListing
                 AccountNumber = "43554654646",
                 DateCreated = new DateTime(2021,01,01)
             },
-            new ContactDto
+            new ContactListingItemDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Price-Bell Peanut Butter",
@@ -78,7 +78,7 @@ namespace ContactsMobileBff.Features.ContactsListing
             }
         };
 
-        public List<ContactDto> GetContacts(ContactsListingSortByType sortBy, ContactsListingSortOrderType sortOrder)
+        public List<ContactListingItemDto> GetContacts(ContactsListingSortByType sortBy, ContactsListingSortOrderType sortOrder)
         {
             if(sortBy == ContactsListingSortByType.DateCreated)
             {
@@ -92,7 +92,7 @@ namespace ContactsMobileBff.Features.ContactsListing
                                 sortedList.ThenByDescending(c => GetSortByValue(sortBy, c)).ToList();
         }
 
-        private string GetSortByValue(ContactsListingSortByType sortBy, ContactDto c)
+        private string GetSortByValue(ContactsListingSortByType sortBy, ContactListingItemDto c)
         {
             switch (sortBy)
             {
@@ -106,7 +106,7 @@ namespace ContactsMobileBff.Features.ContactsListing
         }
     }
 
-    public class ContactDto
+    public class ContactListingItemDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
